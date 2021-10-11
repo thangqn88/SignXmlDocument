@@ -1,0 +1,43 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+@using SignXmlDocument.Models
+@model ResultModel
+<div class="text-center col-md-12">
+    <h1 class="display-4">Welcome</h1>
+    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+
+</div>
+
+<div class="row col-md-12">
+    <form method="post" enctype="multipart/form-data" asp-controller="Home" asp-action="FileUpload">
+        <div class="form-group">
+            <div class="col-md-12">
+                <p>Upload one or more files using this form:</p>
+                <input type="file" name="files" multiple />
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-6">
+                <input type="text" name="keyDsig" placeholder="Please enter key here" />
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-6">
+                <input class="btn btn-primary" type="submit" value="Upload" />
+            </div>
+        </div>
+    </form>
+
+</div>
+
+@if (Model != null)
+{<div class="row col-md-12">
+        <h2>Result: @Model.Status</h2>
+    </div>
+    <p>Detail: File: @Model.FilePath -  @Model.Message</p>
+}
+
+
+
