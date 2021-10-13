@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31424.327
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SignXmlDocument", "SignXmlDocument\SignXmlDocument.csproj", "{703A1B86-9248-4F60-975A-0B225E45EB1B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VerifySignedXml.Web", "SignXmlDocument\VerifySignedXml.Web.csproj", "{703A1B86-9248-4F60-975A-0B225E45EB1B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VerifySignedXml.Api", "VerifySignedXml.Api\VerifySignedXml.Api.csproj", "{4E68A5C6-B997-4B67-A221-16D38C8186AA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{703A1B86-9248-4F60-975A-0B225E45EB1B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{703A1B86-9248-4F60-975A-0B225E45EB1B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{703A1B86-9248-4F60-975A-0B225E45EB1B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4E68A5C6-B997-4B67-A221-16D38C8186AA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4E68A5C6-B997-4B67-A221-16D38C8186AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4E68A5C6-B997-4B67-A221-16D38C8186AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4E68A5C6-B997-4B67-A221-16D38C8186AA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

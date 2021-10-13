@@ -3,14 +3,10 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using SignXmlDocument.Models;
 using SignXmlDocument.Services;
-using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Security.Cryptography;
-using System.Security.Cryptography.Xml;
 using System.Threading.Tasks;
-using System.Xml;
 
 namespace SignXmlDocument.Controllers
 {
@@ -52,66 +48,12 @@ namespace SignXmlDocument.Controllers
             if (filePaths.Count > 0)
             {
 
-                checkResult = CheckXml(filePaths[0]);
+                checkResult = SecurityService.CheckXml(filePaths[0]);
             }
 
             return View("Index", checkResult);
         }
-        private ResultModel CheckXml(string filePath)
-        {
-            var resultModel = new ResultModel
-            {
-                FilePath = filePath
-            };
-            try
-            {
 
-                // Create a new CspParameters object to specify
-                // a key container.
-                CspParameters cspParams = new CspParameters
-                {
-                    KeyContainerName = "XML_DSIG_RSA_KEY"
-                };
-
-                // Create a new RSA signing key and save it in the container.
-                RSACryptoServiceProvider rsaKey = new RSACryptoServiceProvider(cspParams);
-
-                // Create a new XML document.
-                XmlDocument xmlDoc = new XmlDocument
-                {
-
-                    // Load an XML file into the XmlDocument object.
-                    PreserveWhitespace = true
-                };
-
-                xmlDoc.Load(filePath);
-
-
-
-                Console.WriteLine("Verifying signature...");
-                bool result = SecurityService.VerifyXml(xmlDoc, rsaKey);
-
-                // Display the results of the signature verification to
-                // the console.
-                if (result)
-                {
-                    resultModel.Status = "Successed";
-                    resultModel.Message = "The XML signature is valid.";
-                }
-                else
-                {
-                    resultModel.Status = "Failed";
-                    resultModel.Message = "The XML signature is not valid.";
-                }
-            }
-            catch (Exception e)
-            {
-                resultModel.Status = "Failed";
-                resultModel.Message = string.Format("Exception: {0}", e.Message);
-            }
-
-            return resultModel;
-        }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
