@@ -11,5 +11,7 @@ namespace SignXmlDocument.Models
         public string Message { get; set; }
 
         public string FilePath { get; set; }
+
+        public string XmlDecrypted { get; set; }
     }
 }

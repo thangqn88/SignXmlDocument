@@ -18,11 +18,11 @@
                 <input type="file" name="files" multiple />
             </div>
         </div>
-        <div class="form-group">
-            <div class="col-md-6">
-                <input type="text" name="keyDsig" placeholder="Please enter key here" />
-            </div>
-        </div>
+        @*<div class="form-group">
+                <div class="col-md-6">
+                    <input type="text" name="keyDsig" placeholder="Please enter key here" />
+                </div>
+            </div>*@
         <div class="form-group">
             <div class="col-md-6">
                 <input class="btn btn-primary" type="submit" value="Upload" />
@@ -36,7 +36,8 @@
 {<div class="row col-md-12">
         <h2>Result: @Model.Status</h2>
     </div>
-    <p>Detail: File: @Model.FilePath -  @Model.Message</p>
+    <p>Detail: @Model.FilePath -  @Model.Message</p>
+    <p>XML Decrypted: @Model.XmlDecrypted</p>
 }
 
 

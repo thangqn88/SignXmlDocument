@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Security.Cryptography;
+using System.Security.Cryptography.X509Certificates;
 using System.Security.Cryptography.Xml;
 using System.Xml;
 
@@ -12,11 +13,15 @@ namespace SignXmlDocument.Services
         // algorithm and return the result.
         public static Boolean VerifyXml(XmlDocument xmlDoc, RSA key)
         {
+            bool passes = false;
+
             // Check arguments.
             if (xmlDoc == null)
                 throw new ArgumentException("xmlDoc");
             if (key == null)
                 throw new ArgumentException("key");
+
+
 
             // Create a new SignedXml object and pass it
             // the XML document class.
@@ -26,25 +31,25 @@ namespace SignXmlDocument.Services
             // XmlNodeList object.
             XmlNodeList nodeList = xmlDoc.GetElementsByTagName("Signature");
 
+            XmlNodeList certificates = xmlDoc.GetElementsByTagName("X509Certificate");
+            X509Certificate2 dcert2 = new X509Certificate2(Convert.FromBase64String(certificates[0].InnerText));
+
+
+
             // Throw an exception if no signature was found.
             if (nodeList.Count <= 0)
             {
                 throw new CryptographicException("Verification failed: No Signature was found in the document.");
             }
 
-            // This example only supports one signature for
-            // the entire XML document.  Throw an exception
-            // if more than one signature was found.
-            if (nodeList.Count >= 2)
+            foreach (XmlElement element in nodeList)
             {
-                throw new CryptographicException("Verification failed: More that one signature was found for the document.");
+                signedXml.LoadXml(element);
+                passes = signedXml.CheckSignature(dcert2, true);
             }
 
-            // Load the first <signature> node.
-            signedXml.LoadXml((XmlElement)nodeList[0]);
-
-            // Check the signature and return the result.
-            return signedXml.CheckSignature(key);
+            return passes;
         }
     }
+   
 }
