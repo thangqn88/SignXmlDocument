@@ -18,15 +18,22 @@ namespace VerifySignedXml.Api.Services
             try
             {
 
+
                 // Create a new CspParameters object to specify
                 // a key container.
-                CspParameters cspParams = new CspParameters
-                {
-                    KeyContainerName = "XML_DSIG_RSA_KEY"
-                };
+                //CspParameters cspParams = new CspParameters
+                //{
+                //    KeyContainerName = "XML_DSIG_RSA_KEY"
+                //};
 
                 // Create a new RSA signing key and save it in the container.
-                RSACryptoServiceProvider rsaKey = new RSACryptoServiceProvider(cspParams);
+                // RSACryptoServiceProvider rsaKey = new RSACryptoServiceProvider(cspParams);
+                //RSA rsaKey = RSA.Create();
+                //RSAParameters RSAParams = new RSAParameters();
+
+                //rsaKey.ImportParameters(RSAParams);
+
+
 
                 // Create a new XML document.
                 XmlDocument xmlDoc = new XmlDocument
@@ -40,8 +47,7 @@ namespace VerifySignedXml.Api.Services
 
 
 
-                Console.WriteLine("Verifying signature...");
-                var result = SecurityService.VerifyXml(xmlDoc, rsaKey);
+                var result = SecurityService.VerifyXml(xmlDoc);
 
                 // Display the results of the signature verification to
                 // the console.
@@ -69,15 +75,13 @@ namespace VerifySignedXml.Api.Services
 
         // Verify the signature of an XML file against an asymmetric
         // algorithm and return the result.
-        public static Tuple<bool, X509Certificate2> VerifyXml(XmlDocument xmlDoc, RSA key)
+        public static Tuple<bool, X509Certificate2> VerifyXml(XmlDocument xmlDoc)
         {
             bool passes = false;
 
             // Check arguments.
             if (xmlDoc == null)
                 throw new ArgumentException("xmlDoc");
-            if (key == null)
-                throw new ArgumentException("key");
 
 
 
@@ -98,6 +102,12 @@ namespace VerifySignedXml.Api.Services
             if (nodeList.Count <= 0)
             {
                 throw new CryptographicException("Verification failed: No Signature was found in the document.");
+            }
+
+            // Throw an exception if no signature was found.
+            if (nodeList.Count > 1)
+            {
+                throw new CryptographicException("Verification failed: More than 1 Signature was found in the document.");
             }
 
             foreach (XmlElement element in nodeList)
